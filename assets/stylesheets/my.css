@@ -42,3 +42,13 @@ table {
     white-space: nowrap;
     text-align: left;
 }
+/* 下面是添加的额外 */
+.webpage {
+    width: 100%; /* 默认宽度为100% */
+}
+@media screen and (min-width: 601px) { /* 当屏幕尺寸大于601px，比如电脑或平板等设备上 */
+    .webpage {
+        width: 70%; /* 在大屏幕上限制宽度 */
+        margin: 0 auto; /* 宽度限制后，内容居中显示 */
+    }
+}
