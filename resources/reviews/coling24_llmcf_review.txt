@@ -1,0 +1,167 @@
+============================================================================ 
+LREC-COLING 2024 Reviews for Submission #1254
+============================================================================ 
+
+Title: Prompting Large Language Models for Counterfactual Generation: An Empirical Study
+Authors: Yongqi Li, Mayi Xu, Xin Miao, Shen Zhou and Tieyun Qian
+
+
+============================================================================
+                            REVIEWER #1
+============================================================================
+
+Briefly, what is the paper about?
+---------------------------------------------------------------------------
+This paper describes an empirical study into generating counterfactual statements with LLMs. To this end, the authors introduce an evaluation framework and test various language models with this evaluation framework.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                               Relevance: 3
+                             Originality: 4
+                                  Impact: 3
+                               Soundness: 3
+                                 Clarity: 2
+              Appropriate amount of work: 3
+                         Reproducibility: 3
+                  Knowledge of the field: 4
+                          Review Summary: 3
+
+Review justification
+---------------------------------------------------------------------------
+Contributions: An empirical study into generating counterfactual statements, including an evaluation framework, which is used to evaluate multiple language models.
+
+Strengths: It seems that there are thorough mathematical and logical equations being used to evaluate the various settings for generating counterfactual statements. It also appears that the empirical study was quite detailed and an in depth one. The empirical study conducted also included many commonly used language models and evaluated them in an adequate manner. 
+
+Weaknesses: The paper is extremely hard to follow and it is often unclear what the authors' intent is. I would suggest focusing a little on structuring and stating exactly what is planned in the coming section.
+---------------------------------------------------------------------------
+
+
+Feedback for authors
+---------------------------------------------------------------------------
+Please make an effort to re-write this in a manner that will make the paper easier to follow.
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #2
+============================================================================
+
+Briefly, what is the paper about?
+---------------------------------------------------------------------------
+the ability of large language models for generating counterfactuals. The authors present a comprehensive evaluation framework on various types of NLU tasks to investigate the strengths and weaknesses of LLMs as the counterfactual generator and the factors that affect LLMs when generating counterfactuals. The results show that LLMs face challenges in complex tasks like RE since they are bounded by the task-specific performance, entity constraints and inherent selection bias. It also found that alignment techniques may enhance the counterfactual generation ability of LLMs. Besides, task guidelines play an important role while the chain-of-thought does not help due to inconsistency issues.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                               Relevance: 5
+                             Originality: 5
+                                  Impact: 5
+                               Soundness: 5
+                                 Clarity: 4
+              Appropriate amount of work: 5
+                         Reproducibility: 5
+                  Knowledge of the field: 4
+                          Review Summary: 5
+
+Review justification
+---------------------------------------------------------------------------
+Contributions:
+1. It is the first evaluation framework and a systematical empirical study on the capability of LLMs in generating counterfactuals.
+2. It can inspire counterfactual generation study for LLMs.
+
+Strengths:
+1. LLMs' ability for generating counterfactuals is a novel task.
+2. Authors have conducted enough experiments
+
+
+Weaknesses:
+1. There are some grammatical errors. For example, in abstract "in determining LLMs' capability of generating counterfatuals.", "counterfatuals" should be "counterfactuals".
+2. It suggests adding some details of experiment settings hyperparameters, equipments and task-specific template, making replication clear.
+3. Only RE is analyzed in Section 4.3, and the other three tasks are also required to be analyzed.
+4. In Section 3, the discussion about generation method is confusing.
+---------------------------------------------------------------------------
+
+
+Feedback for authors
+---------------------------------------------------------------------------
+The authors should improve the spelling. It should be provided more details about hyperparameters, equipment configuration, and the templates used for each task. Additionally, the authors could analyze the overall impact of generating counterfactual samples on task results and compare the outcomes with those when counterfactual samples were not generated. Alignment techniques have the potential to enhance the generation of all LLMs; this is effective for all generative tasks and is not the key to generating counterfactual samples. If there are length constraints, detailed experimental settings can be included in the appendix.
+---------------------------------------------------------------------------
+
+
+Questions for the authors
+---------------------------------------------------------------------------
+A:1. What is the potential reason for the lack of effectiveness when increasing parameters?
+
+B: In Section 3, are S1 and S2 using the same model? If so, how is it implemented on BERT?
+
+C:
+---------------------------------------------------------------------------
+
+
+
+============================================================================
+                            REVIEWER #3
+============================================================================
+
+Briefly, what is the paper about?
+---------------------------------------------------------------------------
+This paper delves into the examination of Language Models (LLMs) as counterfactual generators, presenting a thorough investigation into their strengths and weaknesses. The research is designed to shed light on the efficacy of LLMs in generating counterfactual instances, with a focus on understanding the factors influencing their performance such as intrinsic properties of LLMs and prompt designing.
+---------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------
+Reviewer's Scores
+---------------------------------------------------------------------------
+                               Relevance: 4
+                             Originality: 3
+                                  Impact: 3
+                               Soundness: 3
+                                 Clarity: 3
+              Appropriate amount of work: 3
+                         Reproducibility: 3
+                  Knowledge of the field: 4
+                          Review Summary: 3
+
+Review justification
+---------------------------------------------------------------------------
+Contributions:
+The paper finds two intersting findings:
+
+1. LLMs excel in generating high-quality counterfactuals in most cases but face challenges with complex tasks like Relation Extraction (RE).
+2. The alignment technique proves effective in enhancing LLMs' counterfactual generation capabilities, while increasing parameter size or applying Contrastive Divergence of Text (CoT) is not consistently beneficial.
+
+
+Strengths:
+
+The paper effectively contributes to the exploration of both the strengths and weaknesses of Language Models (LLMs) in counterfactual generation. It particularly excels in examining the intrinsic properties of LLMs and the influence of prompt design on their performance. The comprehensive analysis enriches our understanding of LLMs' capabilities in generating counterfactual instances.
+
+Weaknesses:
+
+The paper lacks a detailed analysis of common error patterns in counterfactual generation, specifically for the challenging Relation Extraction (RE) task. A quantification of these error patterns would have provided a deeper insight into the limitations of LLMs in handling complex linguistic nuances.
+
+The sensitivity analysis of prompt words and structures, crucial for understanding their impact on the quality of counterfactual generation, is missing. This omission leaves a gap in our understanding of how prompt design nuances influence LLMs' performance.
+
+The absence of examples or qualitative analysis in the paper limits the clarity of the findings. Including specific instances or qualitative assessments would have enhanced the explanation of the observed strengths and weaknesses.
+---------------------------------------------------------------------------
+
+
+Feedback for authors
+---------------------------------------------------------------------------
+The use of counterfactual generation in a constrained scenario harms the overall system performance, as indicated by the author on page 5, where a 4% absolute decrease is observed. The author could enhance the analysis by exploring how this impact extends to embeddings, providing a deeper understanding of the repercussions on the underlying representations within the system.
+---------------------------------------------------------------------------
+
+
+Questions for the authors
+---------------------------------------------------------------------------
+See weaknesses part
+---------------------------------------------------------------------------
+
+
+--
+LREC-COLING 2024 - https://softconf.com/lrec-coling2024/papers

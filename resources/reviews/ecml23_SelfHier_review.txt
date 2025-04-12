@@ -1,0 +1,162 @@
+View Meta-Reviews
+Paper ID
+583
+Paper Title
+Cold-start Multi-hop Reasoning by Hierarchical Guidance and Self-verification
+Track Name
+Research Track
+Meta-Reviewer #1
+Meta-Review Questions
+1. Meta-review based on the reviews and discussion
+There are some weaknesses, mainly revolving around the experiments, but the reviewers are all enthusiastic about the paper, so I can happily recommend it for acceptance.
+
+
+
+
+
+View Reviews
+Paper ID
+583
+Paper Title
+Cold-start Multi-hop Reasoning by Hierarchical Guidance and Self-verification
+Track Name
+Research Track
+
+
+
+Reviewer #2
+Questions
+1. Does the paper fit into the Scope of the ECML-PKDD research track? (See https://2023.ecmlpkdd.org/submissions/research-and-ads-tracks/)
+yes
+2. Please provide a short summary of the paper.
+The paper concerns Multi-hop reasoning for knowledge graph completion such as predicting
+the tail entity given the query head entity and relation. Embedding-based methods that were used so far were not optimal since they cannot provide interpretable reasoning paths. The authors propose a generational model to explore reasoning paths using hierarchical cues and self-verification strategies, where the hierarchical cues strategy guides the reasoning process using hierarchical relationships and coarse-grained clustering, and
+the self-verification strategy constructs reasoning paths by completing the missing triples of facts.
+The results of the experiments show that the developed method gives good results in the case of a cold start on dynamic knowledge graphs and significantly outperforms the existing multi-hop inference methods in the standard scenario on static knowledge graphs. The ablation studies show that both hierarchical guidance and self-verification are critical.
+3. Please rate the technical soundness of the paper: Are the claims well supported by theoretical analysis or experimental results?
+high (contributions verified by solid proofs and/or convincing experiments)
+4. Please rate the novelty of the paper: Is the method or task introduced in this paper original? Or is it a rather incremental advancement of the state-of-the-art?
+high (e.g., novel problem setting and/or innovative solution)
+5. Please rate the quality of the presentation: Is the paper clearly written? Is it well structured? Is it easy to understand?
+high (e.g., a pleasure to read, appropriate formalization of central concepts,good figures, insightful explainations)
+6. Please rate the reproducibility: Does the paper give sufficient information to reproduce the results? Are code and data open source?
+high (information sufficient, code and data accessible)
+7. What are 3 strong points of the paper?
+The paper explains well the steps taken to improve reasoning in the cold-start scenario.
+Presented model is an adaptive method that performs well both in the cold-start scenario and achieves state-of-the-art performance in the standard scenario.
+Ablation studies performed on the hierarchical guidance and self-verification strategies, and the results indicate that all presented strategies
+are useful for improving the performance of the model in both standard and cold-start scenarios.
+8. What are 3 weak points of the paper?
+In the sentence on p. 6 “the K is pre-defined as a hyperparameter” it is not clear what is the role of K in generating subrelations. It may be explained on p. 7 but it is not obvious here.
+
+Explanation of methodology behind the assembly of coarse-grained clusters and fine-grained relationships is hard to follow.
+
+The sentence “..these unknown fact triplets may missing for KGs originally” should be replaced by “these unknown fact triplets may be missing in KGs originally”.
+
+Equation (4) for cosine distance needs to be corrected.
+10. Please enter a detailed review of the paper that explains the answers to the questions you have given above. Please explain your ratings of technical soundness, novelty, quality of presentation, reproducibility, strong and weak points. Please be specific and constructive, e.g., for weak points that can be improved, add suggestions how they can be improved. If e.g., relevant related work has not been considered, please include the references to this work.
+The authors propose a generational model to explore reasoning paths using hierarchical cues and self-verification strategies, where the hierarchical cues strategy guides the reasoning process using hierarchical relationships and coarse-grained clustering, and
+the self-verification strategy constructs reasoning paths by completing the missing triples of facts.
+Multi-hop reasoning is an emerging task for KGC, which aims to find the target tail entities with interpretable reasoning paths. To solve the problem of lacking guidance and explicit paths in the cold-start scenario in dynamic knowledge graphs, authors propose a generative model, named SelfHier that consists of the backbone, the hierarchical guidance, and self-verification.
+
+The paper explains well the steps taken to improve reasoning in the cold-start scenario.
+
+In the sentence on p. 6 “the K is pre-defined as a hyperparameter” it is not clear what is the role of K in generating subrelations. It may be explained on p. 7 but it is not obvious here.
+
+Explanation of methodology behind the assembly of coarse-grained clusters and fine-grained relationships is hard to follow.
+
+The sentence “..these unknown fact triplets may missing for KGs originally” should be replaced by “these unknown fact triplets may be missing in KGs originally”.
+
+Equation (4) for cosine distance needs to be corrected.
+
+
+Presented model is an adaptive method that performs well both in the cold-start scenario and achieves state-of-the-art performance in the standard scenario. Ablation studies performed on the hierarchical guidance and self-verification strategies, and the results indicate that all presented strategies
+are useful for improving the performance of the model in both standard and cold-start scenarios.
+In particular using coarse-grained clusters and fine-grained sub-relations into the guidance is beneficial
+for the overall performance of our model. Even with removed hierarchical guidance and self-verification model still outperforms the best RL-based method, demonstrating the effectiveness of the generation-based framework for conducting multi-hop reasoning.
+Using the sum score of all reasoning paths, and evaluated by experts reasonable rate confirm that the presented model can generate more reasonable paths and facilitate explainable multi-hop reasoning.
+Analysis of hyper parameters used in this approach indicate the best range of each hyper parameter value.
+
+11. Please give an overall rating to the paper into the following categories. The numerical scores will be used to rank the papers in the CMT.
+Strong accept (+ 3) : outstanding paper
+12. Please rate your confidence: How close is the topic to your expertise?
+medium (e.g., I know the state-of-the-art and have worked on related topics)
+
+
+
+
+
+
+
+
+Reviewer #3
+Questions
+1. Does the paper fit into the Scope of the ECML-PKDD research track? (See https://2023.ecmlpkdd.org/submissions/research-and-ads-tracks/)
+yes
+2. Please provide a short summary of the paper.
+This paper proposes a new generation-based model, namely SelfHier. The model uses hierarchical guidance and self-verification strategies to tackle the problem of lacking precise guidance and explicit paths in the cold-start scenario toward dynamic KGs. The experimental results show that SelfHier performs well in standard and cold-start scenarios.
+3. Please rate the technical soundness of the paper: Are the claims well supported by theoretical analysis or experimental results?
+medium (e.g., some experiments are missing)
+4. Please rate the novelty of the paper: Is the method or task introduced in this paper original? Or is it a rather incremental advancement of the state-of-the-art?
+medium (e.g., interesting extension of established work)
+5. Please rate the quality of the presentation: Is the paper clearly written? Is it well structured? Is it easy to understand?
+medium (e.g., needs some effort to understand but ok after some editing)
+6. Please rate the reproducibility: Does the paper give sufficient information to reproduce the results? Are code and data open source?
+medium (e.g., some information is missing, but that could be fixed)
+7. What are 3 strong points of the paper?
+1.The proposed model SelfHier addresses the challenges in the cold-start scenario toward dynamic KGs and provides an interpretable reasoning path by using the hierarchical-guidance and self-verification strategies
+2.The experimental results prove that SelfHier performs well in the cold-start scenario on dynamic KGs and also significantly outperforms existing multi-hop reasoning methods in the standard scenario on static KGs.
+3.In this paper, the proposed model and experimental results are analyzed in detail, which can be helpful for future research in the field of KGC.
+8. What are 3 weak points of the paper?
+1.The proposed model may not scale to large-scale KGs due to its generation-based approach and the given information does not provide any specific details about the number of iterations of the proposed model.
+2.The experimental evaluation in the cold-start scenario is performed on a limited number of datasets that may not represent more possible scenarios.
+3.The seq2seq architecture in 4.5 is not introduced above but popped up here.
+10. Please enter a detailed review of the paper that explains the answers to the questions you have given above. Please explain your ratings of technical soundness, novelty, quality of presentation, reproducibility, strong and weak points. Please be specific and constructive, e.g., for weak points that can be improved, add suggestions how they can be improved. If e.g., relevant related work has not been considered, please include the references to this work.
+The paper is generally well organized and easy to read. The proposed model framework has clear motivation and structure, and contains clear variable definitions and steps, which makes it easy for readers to understand and reproduce. The experiment also achieves well performance on both standard and cold-start scenarios. But it still has some weaknesses as follow.
+1) Discuss what constraints the generation-based approach imposes on the model for large-scale KGs.
+2) The experimental parameters should be fully explained, like the number of iterations.
+3) There seems to be a lack of explanation for the experimental environment.
+4) New nouns should be mentioned and explained above, such as seq2seq and so on.
+11. Please give an overall rating to the paper into the following categories. The numerical scores will be used to rank the papers in the CMT.
+Weak accept (+ 1): borderline, tending to accept
+12. Please rate your confidence: How close is the topic to your expertise?
+medium (e.g., I know the state-of-the-art and have worked on related topics)
+
+
+
+
+
+
+
+Reviewer #4
+Questions
+1. Does the paper fit into the Scope of the ECML-PKDD research track? (See https://2023.ecmlpkdd.org/submissions/research-and-ads-tracks/)
+yes
+2. Please provide a short summary of the paper.
+This paper focuses on the cold-start scenario in dynamic knowledge graphs (KGs) to facilitate more practical multi-hop reasoning, which aims to explore reasoning paths between emerging and existing entities. The authors address two main challenges: (i) lacking precise guidance due to limited information for emerging entities, and (ii) lacking explicit paths since emerging and existing entities are isolated. The proposed SelfHier model employs hierarchical-guidance and self-verification strategies. Hierarchical guidance uses fine-grained sub-relations and coarse-grained clusters to guide the reasoning process, while self-verification constructs explicit reasoning paths by supplementing missing fact triplets. The experiments show that SelfHier performs well in the cold-start scenario on dynamic KGs and significantly outperforms existing multi-hop reasoning methods in the standard scenario on static KGs.
+3. Please rate the technical soundness of the paper: Are the claims well supported by theoretical analysis or experimental results?
+high (contributions verified by solid proofs and/or convincing experiments)
+4. Please rate the novelty of the paper: Is the method or task introduced in this paper original? Or is it a rather incremental advancement of the state-of-the-art?
+medium (e.g., interesting extension of established work)
+5. Please rate the quality of the presentation: Is the paper clearly written? Is it well structured? Is it easy to understand?
+high (e.g., a pleasure to read, appropriate formalization of central concepts,good figures, insightful explainations)
+6. Please rate the reproducibility: Does the paper give sufficient information to reproduce the results? Are code and data open source?
+medium (e.g., some information is missing, but that could be fixed)
+7. What are 3 strong points of the paper?
+Exploration of hierarchical guidance: The proposed SelfHier model utilizes a hierarchical guidance mechanism, which allows it to distinguish between semantically similar relations and eliminate entities with unrelated attributes more effectively than other models.
+
+Adaptability to cold-start scenarios: The self-verification strategy employed by SelfHier pre-explores missing fact triplets and can effectively construct explicit paths even in cold-start scenarios. This leads to better performance when compared to other models like DacKGR and SQUIRE.
+
+Hyperparameter evaluation: The paper investigates the impact of different hyperparameters, such as sub-relation numbers, cluster numbers, and filter frequencies, on model performance, providing useful insights into optimal configurations for the SelfHier model.
+8. What are 3 weak points of the paper?
+Limited experimental settings
+Complexity in tuning hyperparameters
+Incomplete explanation of methodology
+10. Please enter a detailed review of the paper that explains the answers to the questions you have given above. Please explain your ratings of technical soundness, novelty, quality of presentation, reproducibility, strong and weak points. Please be specific and constructive, e.g., for weak points that can be improved, add suggestions how they can be improved. If e.g., relevant related work has not been considered, please include the references to this work.
+Limited experimental settings: While the paper demonstrates the effectiveness of the SelfHier model, it does so under specific experimental settings, leaving room for questions about its generalizability to other datasets or knowledge graph domains.
+Complexity in tuning hyperparameters: Although the authors investigate the effect of different hyperparameters, the ideal choice of these hyperparameters might vary across datasets, potentially making the model harder to tune and optimize for new applications.
+Incomplete explanation of methodology: The paper could provide more in-depth explanations of the proposed model's components and methodology, making it easier for readers to understand and potentially replicate the SelfHier model.
+11. Please give an overall rating to the paper into the following categories. The numerical scores will be used to rank the papers in the CMT.
+Accept (+ 2): good paper
+12. Please rate your confidence: How close is the topic to your expertise?
+medium (e.g., I know the state-of-the-art and have worked on related topics)
