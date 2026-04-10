@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Publications · Yongqi Li</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap">
+<style>
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9f8f5;
+    --bg-tertiary: #f1efe8;
+    --text-primary: #1a1a18;
+    --text-secondary: #5f5e5a;
+    --text-tertiary: #888780;
+    --border: rgba(30,28,24,0.12);
+    --border-secondary: rgba(30,28,24,0.2);
+    --accent: #534AB7;
+    --accent-bg: #EEEDFE;
+    --accent-text: #3C3489;
+    --coral-bg: #FAECE7;
+    --coral-text: #712B13;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-primary: #1c1b18;
+      --bg-secondary: #242320;
+      --bg-tertiary: #2c2c2a;
+      --text-primary: #f0eeea;
+      --text-secondary: #b4b2a9;
+      --text-tertiary: #888780;
+      --border: rgba(255,255,255,0.1);
+      --border-secondary: rgba(255,255,255,0.18);
+      --accent: #AFA9EC;
+      --accent-bg: #26215C;
+      --accent-text: #CECBF6;
+      --coral-bg: #4A1B0C;
+      --coral-text: #F5C4B3;
+    }
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-weight: 400;
+    min-height: 100vh;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .layout { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
+
+  /* Top nav */
+  .topnav {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 2.5rem; padding-bottom: 2rem;
+    border-bottom: 0.5px solid var(--border);
+  }
+  .back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--text-secondary);
+    border: 0.5px solid var(--border); border-radius: 6px;
+    padding: 5px 12px; background: var(--bg-primary);
+    transition: all 0.15s; text-decoration: none;
+  }
+  .back-btn:hover { color: var(--text-primary); border-color: var(--border-secondary); text-decoration: none; }
+  .nav-title { font-size: 15px; font-weight: 500; }
+  .nav-sub { font-size: 13px; color: var(--text-tertiary); margin-left: auto; }
+
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 1.5rem; }
+
+  /* Year filter tabs */
+  .year-tabs {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 2rem;
+  }
+  .year-tab {
+    font-size: 13px; font-weight: 500;
+    padding: 5px 14px; border-radius: 20px;
+    border: 0.5px solid var(--border);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    cursor: pointer; transition: all 0.15s;
+    user-select: none;
+  }
+  .year-tab:hover { border-color: var(--border-secondary); color: var(--text-primary); }
+  .year-tab.active {
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+    color: var(--bg-primary);
+  }
+
+  /* Year groups */
+  .year-group { margin-bottom: 2.25rem; }
+  .year-group.hidden { display: none; }
+
+  .year-row {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 0.875rem;
+  }
+  .year-label { font-size: 12px; font-weight: 500; color: var(--text-tertiary); min-width: 36px; }
+  .year-line { flex: 1; height: 0.5px; background: var(--border); }
+  .year-count { font-size: 11px; color: var(--text-tertiary); }
+
+  /* Pub cards */
+  .pub-list { display: flex; flex-direction: column; gap: 8px; }
+  .pub-card {
+    background: var(--bg-primary); border: 0.5px solid var(--border);
+    border-radius: 12px; padding: 1rem 1.25rem;
+    transition: border-color 0.15s;
+  }
+  .pub-card:hover { border-color: var(--border-secondary); }
+  .pub-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; line-height: 1.5; }
+  .pub-authors { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.5; }
+  .pub-authors strong { color: var(--text-primary); font-weight: 500; }
+  .pub-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+
+  .badge {
+    display: inline-block; font-size: 11px; font-weight: 500;
+    padding: 2px 7px; border-radius: 5px; white-space: nowrap;
+    background: var(--bg-tertiary); color: var(--text-secondary);
+    border: 0.5px solid var(--border);
+  }
+  .badge-oral {
+    background: var(--coral-bg); color: var(--coral-text);
+    border: 0.5px solid rgba(153,60,29,0.15);
+  }
+
+  .pub-links { display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap; }
+  .pub-link {
+    font-size: 12px; color: var(--text-secondary);
+    border: 0.5px solid var(--border); border-radius: 5px;
+    padding: 2px 8px; background: var(--bg-secondary);
+    transition: all 0.15s; text-decoration: none;
+  }
+  .pub-link:hover { color: var(--text-primary); border-color: var(--border-secondary); text-decoration: none; }
+
+  footer {
+    text-align: center; padding: 2rem 0 0;
+    border-top: 0.5px solid var(--border);
+    font-size: 13px; color: var(--text-tertiary);
+  }
+
+  @media (max-width: 540px) {
+    .pub-links { margin-left: 0; }
+    .nav-sub { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <div class="topnav">
+    <a class="back-btn" href="index.html">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+        <path d="M9.5 6h-7M5.5 3L2.5 6l3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back
+    </a>
+    <span class="nav-title">Yongqi Li</span>
+    <span class="nav-sub"><sup>*</sup> corresponding author · <sup>†</sup> equal contribution</span>
+  </div>
+
+  <h1>Publications</h1>
+
+  <div class="year-tabs">
+    <div class="year-tab active" data-year="all">All</div>
+    <div class="year-tab" data-year="2026">2026</div>
+    <div class="year-tab" data-year="2025">2025</div>
+    <div class="year-tab" data-year="2024">2024</div>
+    <div class="year-tab" data-year="2023">2023</div>
+  </div>
+
+  <!-- 2026 -->
+  <div class="year-group" data-group="2026">
+    <div class="year-row">
+      <span class="year-label">2026</span>
+      <div class="year-line"></div>
+      <span class="year-count">3 papers</span>
+    </div>
+    <div class="pub-list">
+
+      <div class="pub-card">
+        <div class="pub-title">Controlling Multimodal Conversational Agents with Coverage-Enhanced Latent Actions</div>
+        <div class="pub-authors"><strong>Yongqi Li</strong><sup>†</sup>, Hao Lang<sup>†</sup>, Tieyun Qian<sup>*</sup>, Yongbin Li<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">ACL 2026</span>
+          <div class="pub-links">
+            <a class="pub-link" href="https://arxiv.org/abs/2601.07516">Paper</a>
+            <a class="pub-link" href="https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/MMLatentAction">Code</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Understanding Generalization in Role-Playing Models via Information Theory</div>
+        <div class="pub-authors"><strong>Yongqi Li</strong><sup>†</sup>, Hao Lang<sup>†</sup>, Fei Huang, Tieyun Qian<sup>*</sup>, Yongbin Li<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">ACL 2026 Findings</span>
+          <div class="pub-links">
+            <a class="pub-link" href="https://arxiv.org/abs/2512.17270">Paper</a>
+            <a class="pub-link" href="https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/RPM-Generalization">Code</a>
+            <a class="pub-link" href="https://huggingface.co/datasets/YongqiLi/RPGBench">Benchmark</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Recursive Short-to-Long Generalization for Multi-hop Reasoning</div>
+        <div class="pub-authors">Mayi Xu, Ke Sun, Jianhao Chen, Qiankun Pi, Guixin Su, Yunfeng Ning, <strong>Yongqi Li</strong>, Yuanyuan Zhu, Ming Zhong, Jiawei Jiang, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">SIGIR 2026</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2025 -->
+  <div class="year-group" data-group="2025">
+    <div class="year-row">
+      <span class="year-label">2025</span>
+      <div class="year-line"></div>
+      <span class="year-count">4 papers</span>
+    </div>
+    <div class="pub-list">
+
+      <div class="pub-card">
+        <div class="pub-title">Aligning VLM Assistants with Personalized Situated Cognition</div>
+        <div class="pub-authors"><strong>Yongqi Li</strong>, Shen Zhou, Xiaohu Li, Xin Miao, Jintao Wen, Mayi Xu, Jianhao Chen, Birong Pan, Hankun Kang, Yuanyuan Zhu<sup>*</sup>, Ming Zhong, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">ACL 2025</span>
+          <div class="pub-links">
+            <a class="pub-link" href="https://aclanthology.org/2025.acl-long.484.pdf">Paper</a>
+            <a class="pub-link" href="https://github.com/liyongqi2002/PCogAlign">Code</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Strong Empowered and Aligned Weak Mastered Annotation for Weak-to-Strong Generalization</div>
+        <div class="pub-authors"><strong>Yongqi Li</strong>, Xin Miao, Mayi Xu, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">AAAI 2025</span>
+          <div class="pub-links">
+            <a class="pub-link" href="../resources/arxiv_aaai25_W2SG.pdf">Paper</a>
+            <a class="pub-link" href="https://github.com/liyongqi2002/SEAM">Code</a>
+            <a class="pub-link" href="https://zhuanlan.zhihu.com/p/29518652558">Blog (中文)</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Enhancing Relation Extraction via Supervised Rationale Verification and Feedback</div>
+        <div class="pub-authors"><strong>Yongqi Li</strong>, Xin Miao, Shen Zhou, Mayi Xu, Yuyang Ren, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">AAAI 2025</span>
+          <span class="badge badge-oral">Oral · 4.6%</span>
+          <div class="pub-links">
+            <a class="pub-link" href="../resources/aaai25_SRVF.pdf">Paper</a>
+            <a class="pub-link" href="https://github.com/liyongqi2002/SRVF">Code</a>
+            <a class="pub-link" href="https://zhuanlan.zhihu.com/p/12000560714">Blog (中文)</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">A Survey on Training-free Alignment of Large Language Models</div>
+        <div class="pub-authors">Birong Pan, <strong>Yongqi Li</strong>, Weiyu Zhang, Wenpeng Lu, Mayi Xu, Shen Zhou, Yuanyuan Zhu, Ming Zhong, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">EMNLP 2025 Findings</span>
+          <div class="pub-links">
+            <a class="pub-link" href="https://aclanthology.org/2025.findings-emnlp.238.pdf">Paper</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2024 -->
+  <div class="year-group" data-group="2024">
+    <div class="year-row">
+      <span class="year-label">2024</span>
+      <div class="year-line"></div>
+      <span class="year-count">4 papers</span>
+    </div>
+    <div class="pub-list">
+
+      <div class="pub-card">
+        <div class="pub-title">Adaption-of-Thought: Learning Question Difficulty Improves Large Language Models for Reasoning</div>
+        <div class="pub-authors">Mayi Xu, <strong>Yongqi Li</strong>, Ke Sun, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">EMNLP 2024</span>
+          <div class="pub-links">
+            <a class="pub-link" href="../resources/emnlp24_adot.pdf">Paper</a>
+            <a class="pub-link" href="https://github.com/NLPGM/AdoT">Code</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Episodic Memory Retrieval from LLMs: A Neuromorphic Mechanism to Generate Commonsense Counterfactuals for Relation Extraction</div>
+        <div class="pub-authors">Xin Miao, <strong>Yongqi Li</strong>, Shen Zhou, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">ACL 2024 Findings</span>
+          <div class="pub-links">
+            <a class="pub-link" href="../resources/acl24_cfRE.pdf">Paper</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">An Ensemble-of-Experts Framework for Rehearsal-free Continual Relation Extraction</div>
+        <div class="pub-authors">Shen Zhou, <strong>Yongqi Li</strong>, Xin Miao, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">ACL 2024 Findings</span>
+          <div class="pub-links">
+            <a class="pub-link" href="../resources/acl24_continualRE.pdf">Paper</a>
+            <a class="pub-link" href="https://github.com/NLPWM-WHU/EoE-CRE">Code</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Prompting Large Language Models for Counterfactual Generation: An Empirical Study</div>
+        <div class="pub-authors"><strong>Yongqi Li</strong><sup>†</sup>, Mayi Xu<sup>†</sup>, Xin Miao<sup>†</sup>, Shen Zhou<sup>†</sup>, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">LREC-COLING 2024</span>
+          <div class="pub-links">
+            <a class="pub-link" href="../resources/coling24_llmcf.pdf">Paper</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 2023 -->
+  <div class="year-group" data-group="2023">
+    <div class="year-row">
+      <span class="year-label">2023</span>
+      <div class="year-line"></div>
+      <span class="year-count">3 papers</span>
+    </div>
+    <div class="pub-list">
+
+      <div class="pub-card">
+        <div class="pub-title">Generating Commonsense Counterfactuals for Stable Relation Extraction</div>
+        <div class="pub-authors">Xin Miao, <strong>Yongqi Li</strong>, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">EMNLP 2023</span>
+          <div class="pub-links">
+            <a class="pub-link" href="../resources/emnlp23_cfRE.pdf">Paper</a>
+            <a class="pub-link" href="https://github.com/NLPWM-WHU/CCG">Code</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Type-Aware Decomposed Framework for Few-Shot Named Entity Recognition</div>
+        <div class="pub-authors"><strong>Yongqi Li</strong>, Yu Yu, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">EMNLP 2023 Findings</span>
+          <div class="pub-links">
+            <a class="pub-link" href="../resources/emnlp23_fsNER.pdf">Paper</a>
+            <a class="pub-link" href="https://github.com/liyongqi2002/TadNER">Code</a>
+            <a class="pub-link" href="https://zhuanlan.zhihu.com/p/672183269">Blog (中文)</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-title">Cold-start Multi-hop Reasoning by Hierarchical Guidance and Self-verification</div>
+        <div class="pub-authors">Mayi Xu, Ke Sun, <strong>Yongqi Li</strong>, Tieyun Qian<sup>*</sup></div>
+        <div class="pub-footer">
+          <span class="badge">ECML/PKDD 2023</span>
+          <div class="pub-links">
+            <a class="pub-link" href="../resources/ecml23_SelfHier.pdf">Paper</a>
+            <a class="pub-link" href="https://github.com/NLPWM-WHU/SelfHier">Code</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>&copy; 2026 Yongqi Li</footer>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.year-tab');
+  const groups = document.querySelectorAll('.year-group');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const selected = tab.dataset.year;
+      groups.forEach(g => {
+        if (selected === 'all' || g.dataset.group === selected) {
+          g.classList.remove('hidden');
+        } else {
+          g.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
