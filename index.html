@@ -73,11 +73,13 @@
     margin-bottom: 3rem; padding-bottom: 2.5rem;
     border-bottom: 0.5px solid var(--border);
   }
+  
   .avatar {
-    width: 88px; height: 88px; border-radius: 50%;
+    width: 80px; height: 106px;   /* 高 > 宽，竖向椭圆 */
+    border-radius: 50%;            /* 椭圆：对非正方形容器 50% = 椭圆 */
     background: var(--accent-bg); border: 0.5px solid var(--border);
     flex-shrink: 0;
-    overflow: hidden;   /* ← 关键：裁掉圆形外的部分 */
+    overflow: hidden;
     box-shadow: 0 0 0 3px var(--bg-primary), 0 0 0 4px var(--border);
   }
   
