@@ -109,6 +109,37 @@
   .paper-tag { font-size: 11px; padding: 3px 8px; border-radius: 999px; background: var(--color-bg-secondary); color: var(--color-text-secondary); }
   .paper-arrow { font-size: 14px; color: var(--color-text-tertiary); flex-shrink: 0; margin-top: 3px; }
   .no-results { text-align: center; padding: 3rem 0; color: var(--color-text-secondary); font-size: 14px; }
+
+  .loading {
+    text-align: center; padding: 4rem 0;
+    color: var(--color-text-secondary); font-size: 14px;
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+  }
+  .spinner {
+    width: 24px; height: 24px;
+    border: 2px solid var(--color-border);
+    border-top-color: #7F77DD;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .error-msg {
+    text-align: center; padding: 3rem 0;
+    color: var(--color-text-secondary); font-size: 14px;
+  }
+  .error-msg a { color: #7F77DD; text-decoration: none; }
+  .error-msg a:hover { text-decoration: underline; }
+
+  .source-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; color: var(--color-text-tertiary);
+    border: 0.5px solid var(--color-border);
+    border-radius: 999px; padding: 3px 10px;
+    text-decoration: none; transition: color 0.15s, border-color 0.15s;
+    margin-top: 6px;
+  }
+  .source-badge:hover { color: var(--color-text-secondary); border-color: var(--color-border-hover); }
 </style>
 </head>
 <body>
@@ -119,10 +150,15 @@
       <div class="title-block">
         <h1>Awesome Personalized Alignment</h1>
         <p>A curated collection of research on aligning LLMs with individual preferences.</p>
+        <a class="source-badge"
+           href="https://github.com/liyongqi2002/Awesome-Personalized-Alignment"
+           target="_blank" rel="noopener noreferrer">
+          ↗ Auto-synced from GitHub README
+        </a>
       </div>
       <div class="stats">
         <div class="stat"><div class="stat-num" id="total-count">—</div><div class="stat-label">Papers</div></div>
-        <div class="stat"><div class="stat-num">2023–2026</div><div class="stat-label">Coverage</div></div>
+        <div class="stat"><div class="stat-num" id="year-range">—</div><div class="stat-label">Coverage</div></div>
       </div>
     </div>
   </div>
@@ -135,128 +171,133 @@
   </div>
 
   <div class="count-label" id="count-label"></div>
-  <div class="papers-grid" id="papers-grid"></div>
+  <div class="papers-grid" id="papers-grid">
+    <div class="loading">
+      <div class="spinner"></div>
+      <span>Fetching papers from GitHub...</span>
+    </div>
+  </div>
 
 </div>
 <script>
-const papers = [
-  { title: "A Survey on Personalized and Pluralistic Preference Alignment in Large Language Models", year: 2026, url: "https://arxiv.org/abs/2504.07070v1", tags: [] },
-  { title: "Language Models Don't Know What You Want: Evaluating Personalization in Deep Research Needs Real Users", year: 2026, url: "https://arxiv.org/abs/2603.16120", tags: [] },
-  { title: "A Survey on Personalized and Pluralistic Preference Alignment in Large Language Models", year: 2025, url: "https://arxiv.org/abs/2504.07070v1", tags: ["Survey"] },
-  { title: "A Survey on Personalized Alignment — The Missing Piece for Large Language Models in Real-World Applications", year: 2025, url: "https://arxiv.org/abs/2503.17003", tags: ["Survey"] },
-  { title: "Two Tales of Persona in LLMs: A Survey of Role-Playing and Personalization", year: 2024, url: "https://aclanthology.org/2024.findings-emnlp.969/", tags: ["Survey"] },
-  { title: "Personalized Multimodal Large Language Models: A Survey", year: 2024, url: "https://arxiv.org/abs/2412.02142", tags: ["Survey", "Multimodal"] },
-  { title: "Personalization of Large Language Models: A Survey", year: 2024, url: "https://arxiv.org/abs/2411.00027", tags: ["Survey"] },
-  { title: "When large language models meet personalization: perspectives of challenges and opportunities", year: 2024, url: "https://doi.org/10.1007/s11280-024-01276-1", tags: ["Survey"] },
-  { title: "The Multilingual Alignment Prism: Aligning Global and Local Preferences to Reduce Harm", year: 2024, url: "https://arxiv.org/abs/2406.18682", tags: ["Survey"] },
-  { title: "Recent Trends in Personalized Dialogue Generation: A Review of Datasets, Methodologies, and Evaluations", year: 2024, url: "https://aclanthology.org/2024.lrec-main.1192/", tags: ["Survey"] },
-  { title: "The benefits, risks and bounds of personalizing the alignment of large language models to individuals", year: 2024, url: "https://www.nature.com/articles/s42256-024-00820-y", tags: ["Survey"] },
-  { title: "Position: A Roadmap to Pluralistic Alignment", year: 2024, url: "https://openreview.net/forum?id=gQpBnRHwxM", tags: ["Survey"] },
-  { title: "Personalized RewardBench: Evaluating Reward Models with Human Aligned Personalization", year: 2026, url: "https://arxiv.org/abs/2604.07343", tags: ["Benchmark", "Reward Model"] },
-  { title: "AlpsBench: An LLM Personalization Benchmark for Real-Dialogue Memorization and Preference Alignment", year: 2026, url: "https://arxiv.org/abs/2603.26680", tags: ["Benchmark"] },
-  { title: "Personalized Group Relative Policy Optimization for Heterogenous Preference Alignment", year: 2026, url: "https://arxiv.org/abs/2603.10009", tags: [] },
-  { title: "Learning to summarize user information for personalized reinforcement learning from human feedback", year: 2026, url: "https://openreview.net/forum?id=Ar078WR3um", tags: [] },
-  { title: "Think-While-Generating: On-the-Fly Reasoning for Personalized Long-Form Generation", year: 2026, url: "https://openreview.net/forum?id=lle0aGQyQb", tags: [] },
-  { title: "Swap-guided Preference Learning for Personalized Reinforcement Learning from Human Feedback", year: 2026, url: "https://openreview.net/forum?id=nc28mSbyVG", tags: [] },
-  { title: "Personalized Reasoning: Just-in-time Personalization and Why LLMs Fail at It", year: 2026, url: "https://openreview.net/forum?id=O1hfVE0UxG", tags: [] },
-  { title: "NextQuill: Causal Preference Modeling for Enhancing LLM Personalization", year: 2026, url: "https://openreview.net/forum?id=xYpVlKMFqv", tags: [] },
-  { title: "What's In My Human Feedback? Learning Interpretable Descriptions of Preference Data", year: 2026, url: "https://openreview.net/forum?id=sC6A1bFDUt", tags: [] },
-  { title: "P-GenRM: Personalized Generative Reward Model with Test-time User-based Scaling", year: 2026, url: "https://openreview.net/forum?id=hXNApWLBZG", tags: ["Reward Model"] },
-  { title: "Towards Faithful and Controllable Personalization via Critique-Post-Edit Reinforcement Learning", year: 2025, url: "https://arxiv.org/abs/2510.18849", tags: [] },
-  { title: "POPI: Personalizing LLMs via Optimized Natural Language Preference Inference", year: 2025, url: "https://arxiv.org/abs/2510.17881", tags: [] },
-  { title: "PrefPalette: Personalized Preference Modeling with Latent Attributes", year: 2025, url: "https://arxiv.org/abs/2507.13541", tags: [] },
-  { title: "CoSteer: Collaborative Decoding-Time Personalization via Local Delta Steering", year: 2025, url: "https://arxiv.org/abs/2507.04756", tags: [] },
-  { title: "PRIME: Large Language Model Personalization with Cognitive Memory and Thought Processes", year: 2025, url: "https://arxiv.org/abs/2507.04607", tags: ["Memory"] },
-  { title: "Personalized LLM Decoding via Contrasting Personal Preference", year: 2025, url: "https://arxiv.org/abs/2506.12109", tags: [] },
-  { title: "PersonaFeedback: A Large-scale Human-annotated Benchmark For Personalization", year: 2025, url: "https://arxiv.org/abs/2506.12915", tags: ["Benchmark"] },
-  { title: "PersonaLens: A Benchmark for Personalization Evaluation in Conversational AI Assistants", year: 2025, url: "https://arxiv.org/abs/2506.09902", tags: ["Benchmark"] },
-  { title: "SynthesizeMe! Inducing Persona-Guided Prompts for Personalized Reward Models in LLMs", year: 2025, url: "https://arxiv.org/abs/2506.05598", tags: ["Reward Model"] },
-  { title: "PersonaAgent: When Large Language Model Agents Meet Personalization at Test Time", year: 2025, url: "https://arxiv.org/abs/2506.06254", tags: [] },
-  { title: "Aligning VLM Assistants with Personalized Situated Cognition", year: 2025, url: "https://arxiv.org/abs/2506.00930", tags: ["Multimodal"] },
-  { title: "MiCRo: Mixture Modeling and Context-aware Routing for Personalized Preference Learning", year: 2025, url: "https://arxiv.org/abs/2505.24846", tags: [] },
-  { title: "When Harry Meets Superman: The Role of The Interlocutor in Persona-Based Dialogue Generation", year: 2025, url: "https://arxiv.org/abs/2505.24613", tags: [] },
-  { title: "Reasoning Meets Personalization: Unleashing the Potential of Large Reasoning Model for Personalized Generation", year: 2025, url: "https://arxiv.org/abs/2505.17571", tags: [] },
-  { title: "Extended Inductive Reasoning for Personalized Preference Inference from Behavioral Signals", year: 2025, url: "https://arxiv.org/abs/2505.18071", tags: [] },
-  { title: "Steering Large Language Models for Machine Translation Personalization", year: 2025, url: "https://arxiv.org/abs/2505.16612", tags: [] },
-  { title: "From Generic Empathy to Personalized Emotional Support: A Self-Evolution Framework for User Preference Alignment", year: 2025, url: "https://arxiv.org/abs/2505.16610", tags: [] },
-  { title: "Embodied Agents Meet Personalization: Exploring Memory Utilization for Personalized Assistance", year: 2025, url: "https://arxiv.org/abs/2505.16348", tags: ["Memory"] },
-  { title: "Teaching Language Models to Evolve with Users: Dynamic Profile Modeling for Personalized Alignment", year: 2025, url: "https://arxiv.org/abs/2505.15456", tags: [] },
-  { title: "A Personalized Conversational Benchmark: Towards Simulating Personalized Conversations", year: 2025, url: "https://arxiv.org/abs/2505.14106", tags: ["Benchmark"] },
-  { title: "LoRe: Personalizing LLMs via Low-Rank Reward Modeling", year: 2025, url: "https://arxiv.org/abs/2504.14439", tags: ["Reward Model"] },
-  { title: "Persona-judge: Personalized Alignment of Large Language Models via Token-level Self-judgment", year: 2025, url: "https://arxiv.org/abs/2504.12663", tags: [] },
-  { title: "EmpathyAgent: Can Embodied Agents Conduct Empathetic Actions?", year: 2025, url: "https://www.arxiv.org/abs/2503.16545", tags: [] },
-  { title: "From 1,000,000 Users to Every User: Scaling Up Personalized Preference for User-level Alignment", year: 2025, url: "https://arxiv.org/abs/2503.15463", tags: [] },
-  { title: "Toward Multi-Session Personalized Conversation: A Large-Scale Dataset and Hierarchical Tree Framework for Implicit Reasoning", year: 2025, url: "https://arxiv.org/abs/2503.07018", tags: ["Memory"] },
-  { title: "Drift: Decoding-time Personalized Alignments with Implicit User Preferences", year: 2025, url: "https://arxiv.org/abs/2502.14289", tags: [] },
-  { title: "When Personalization Meets Reality: A Multi-Faceted Analysis of Personalized Preference Learning", year: 2025, url: "https://arxiv.org/abs/2502.19158", tags: [] },
-  { title: "Amulet: ReAlignment During Test Time for Personalized Preference Adaptation of LLMs", year: 2025, url: "https://arxiv.org/abs/2502.19148", tags: [] },
-  { title: "PEToolLLM: Towards Personalized Tool Learning in Large Language Models", year: 2025, url: "https://arxiv.org/abs/2502.18980", tags: [] },
-  { title: "Do LLMs Recognize Your Preferences? Evaluating Personalized Preference Following in LLMs", year: 2025, url: "https://arxiv.org/abs/2309.03126", tags: ["Benchmark"] },
-  { title: "Everyone Deserves A Reward: Learning Customized Human Preferences", year: 2024, url: "https://arxiv.org/abs/2309.03126", tags: ["Reward Model"] },
-  { title: "AI PERSONA: Towards Life-long Personalization of LLMs", year: 2024, url: "https://arxiv.org/abs/2412.13103", tags: ["Memory"] },
-  { title: "BAPO: Base-Anchored Preference Optimization for Overcoming Forgetting in Large Language Models Personalization", year: 2024, url: "https://aclanthology.org/2024.findings-emnlp.398.pdf", tags: [] },
-  { title: "The PRISM Alignment Dataset: What Participatory, Representative and Individualised Human Feedback Reveals About the Subjective and Multicultural Alignment of Large Language Models", year: 2024, url: "https://openreview.net/forum?id=DFr5hteojx", tags: ["Benchmark"] },
-  { title: "Large Language Models Empowered Personalized Web Agents", year: 2024, url: "https://arxiv.org/abs/2410.17236", tags: [] },
-  { title: "ComPO: Community Preferences for Language Model Personalization", year: 2024, url: "https://arxiv.org/abs/2410.16027", tags: [] },
-  { title: "MetaAlign: Align Large Language Models with Diverse Preferences during Inference Time", year: 2024, url: "https://arxiv.org/abs/2410.14184", tags: [] },
-  { title: "LLMs are Biased Teachers: Evaluating LLM Bias in Personalized Education", year: 2024, url: "https://arxiv.org/abs/2410.14012", tags: ["Benchmark"] },
-  { title: "Personalized Adaptation via In-Context Preference Learning", year: 2024, url: "https://arxiv.org/abs/2410.14001", tags: [] },
-  { title: "Aligning LLMs with Individual Preferences via Interaction", year: 2024, url: "http://arxiv.org/abs/2410.03642", tags: [] },
-  { title: "Controllable Safety Alignment: Inference-Time Adaptation to Diverse Safety Requirements", year: 2024, url: "http://arxiv.org/abs/2410.08968", tags: ["Safety"] },
-  { title: "PAD: Personalized Alignment at Decoding-Time", year: 2024, url: "http://arxiv.org/abs/2410.04070", tags: [] },
-  { title: "MAP: Multi-Human-Value Alignment Palette", year: 2024, url: "https://openreview.net/forum?id=NN6QHwgRrQ", tags: [] },
-  { title: "PAL: Sample-Efficient Personalized Reward Modeling for Pluralistic Alignment", year: 2024, url: "https://openreview.net/forum?id=1kFDrYCuSu", tags: ["Reward Model"] },
-  { title: "PersonalLLM: Tailoring LLMs to Individual Preferences", year: 2024, url: "http://arxiv.org/abs/2409.20296", tags: [] },
-  { title: "Persona-DB: Efficient Large Language Model Personalization for Response Prediction with Collaborative Data Refinement", year: 2024, url: "https://arxiv.org/abs/2402.11060", tags: [] },
-  { title: "Personalizing Reinforcement Learning from Human Feedback with Variational Preference Learning", year: 2024, url: "http://arxiv.org/abs/2408.10075", tags: [] },
-  { title: "Show, Don't Tell: Aligning Language Models with Demonstrated Feedback", year: 2024, url: "https://arxiv.org/abs/2406.00888", tags: [] },
-  { title: "Few-shot Personalization of LLMs with Mis-aligned Responses", year: 2024, url: "http://arxiv.org/abs/2406.18678", tags: [] },
-  { title: "Modular Pluralism: Pluralistic Alignment via Multi-LLM Collaboration", year: 2024, url: "https://arxiv.org/abs/2406.15951", tags: [] },
-  { title: "Aligning to Thousands of Preferences via System Message Generalization", year: 2024, url: "https://arxiv.org/abs/2405.17977", tags: [] },
-  { title: "RLHF from Heterogeneous Feedback via Personalization and Preference Aggregation", year: 2024, url: "https://arxiv.org/abs/2405.00254", tags: [] },
-  { title: "The PRISM Alignment Project: What Participatory, Representative and Individualised Human Feedback Reveals About the Subjective and Multicultural Alignment of Large Language Models", year: 2024, url: "https://arxiv.org/abs/2404.16019", tags: ["Benchmark"] },
-  { title: "Personalized Language Modeling from Personalized Human Feedback", year: 2024, url: "https://arxiv.org/abs/2402.05133", tags: [] },
-  { title: "Personalized Soups: Personalized Large Language Model Alignment via Post-hoc Parameter Merging", year: 2023, url: "https://arxiv.org/abs/2310.11564", tags: [] },
+// ─── CONFIG ──────────────────────────────────────────────────────────────────
+// GitHub raw URL of the README to fetch
+const README_URL = "https://raw.githubusercontent.com/liyongqi2002/Awesome-Personalized-Alignment/main/README.md";
+
+// How to map README section headings → tags shown in the UI
+// Key: substring to match in the ### heading (case-insensitive)
+// Value: tag label(s) to apply
+const SECTION_TAG_MAP = [
+  { match: "survey",      tag: "Survey"      },
+  { match: "position",    tag: "Survey"      },
+  { match: "benchmark",   tag: "Benchmark"   },
+  { match: "reward",      tag: "Reward Model"},
+  { match: "memory",      tag: "Memory"      },
+  { match: "multimodal",  tag: "Multimodal"  },
+  { match: "safety",      tag: "Safety"      },
 ];
 
+// Ordered list of tags shown in the filter bar
 const DEFINED_TAGS = ["Survey", "Benchmark", "Reward Model", "Memory", "Multimodal", "Safety"];
+
+// ─── PARSER ──────────────────────────────────────────────────────────────────
+/**
+ * Parse the README markdown and return an array of paper objects:
+ *   { title, year, url, tags }
+ *
+ * Recognises lines matching:
+ *   - [YYYY/MM] **[Title](url)**  (any optional trailing text / tags ignored)
+ *   - [YYYY/MM] **[Title](url)** [extra tag]   ← the bracketed extra is ignored
+ */
+function parseReadme(text) {
+  const papers = [];
+  const lines = text.split("\n");
+
+  // Track current section heading (### …) to derive tags
+  let currentSectionTags = [];
+
+  // Regex for a paper entry line
+  // Group 1: year (4 digits), Group 2: title, Group 3: url
+  const paperRe = /^\s*-\s+\[(\d{4})\/\d{2}\]\s+\*\*\[(.+?)\]\((.+?)\)\*\*/;
+
+  // Regex for a section heading (### …)
+  const sectionRe = /^###\s+(.+)/;
+
+  for (const line of lines) {
+    // Update section if we hit a ### heading
+    const secMatch = line.match(sectionRe);
+    if (secMatch) {
+      const heading = secMatch[1].toLowerCase();
+      currentSectionTags = SECTION_TAG_MAP
+        .filter(({ match }) => heading.includes(match))
+        .map(({ tag }) => tag);
+      // Deduplicate
+      currentSectionTags = [...new Set(currentSectionTags)];
+      continue;
+    }
+
+    // Skip commented-out lines (<!-- … -->)
+    if (line.trim().startsWith("<!--")) continue;
+
+    // Match a paper line
+    const m = line.match(paperRe);
+    if (!m) continue;
+
+    const year = parseInt(m[1], 10);
+    const title = m[2].trim();
+    const url   = m[3].trim();
+
+    // Avoid exact duplicates (same title + url)
+    const isDupe = papers.some(p => p.url === url && p.title === title);
+    if (isDupe) continue;
+
+    papers.push({ title, year, url, tags: [...currentSectionTags] });
+  }
+
+  return papers;
+}
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let papers = [];
 let activeTag = null;
 
-const tagFilters = document.getElementById('tag-filters');
-DEFINED_TAGS.forEach(tag => {
-  const btn = document.createElement('button');
-  btn.className = 'tag-btn';
-  btn.textContent = tag;
-  btn.onclick = () => {
-    activeTag = activeTag === tag ? null : tag;
-    document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
-    if (activeTag) btn.classList.add('active');
-    filterPapers();
-  };
-  tagFilters.appendChild(btn);
-});
-
-document.getElementById('total-count').textContent = papers.length;
-
+// ─── RENDER ──────────────────────────────────────────────────────────────────
 function yearClass(y) {
-  if (y >= 2026) return 'y2026';
-  if (y === 2025) return 'y2025';
-  if (y === 2024) return 'y2024';
-  return 'y2023';
+  if (y >= 2026) return "y2026";
+  if (y === 2025) return "y2025";
+  if (y === 2024) return "y2024";
+  return "y2023";
+}
+
+function buildTagFilters() {
+  const container = document.getElementById("tag-filters");
+  container.innerHTML = "";
+  DEFINED_TAGS.forEach(tag => {
+    const btn = document.createElement("button");
+    btn.className = "tag-btn";
+    btn.textContent = tag;
+    btn.onclick = () => {
+      activeTag = activeTag === tag ? null : tag;
+      document.querySelectorAll(".tag-btn").forEach(b => b.classList.remove("active"));
+      if (activeTag) btn.classList.add("active");
+      filterPapers();
+    };
+    container.appendChild(btn);
+  });
 }
 
 function filterPapers() {
-  const query = document.getElementById('search').value.toLowerCase();
-  const grid = document.getElementById('papers-grid');
-  grid.innerHTML = '';
+  const query = document.getElementById("search").value.toLowerCase();
+  const grid  = document.getElementById("papers-grid");
+  grid.innerHTML = "";
 
   const filtered = papers.filter(p => {
     const matchSearch = !query || p.title.toLowerCase().includes(query);
-    const matchTag = !activeTag || p.tags.includes(activeTag);
+    const matchTag    = !activeTag || p.tags.includes(activeTag);
     return matchSearch && matchTag;
   });
 
-  document.getElementById('count-label').textContent =
+  document.getElementById("count-label").textContent =
     `Showing ${filtered.length} of ${papers.length} papers`;
 
   if (filtered.length === 0) {
@@ -264,6 +305,7 @@ function filterPapers() {
     return;
   }
 
+  // Group by year, newest first
   const byYear = {};
   filtered.forEach(p => {
     if (!byYear[p.year]) byYear[p.year] = [];
@@ -271,36 +313,36 @@ function filterPapers() {
   });
 
   Object.keys(byYear).sort((a, b) => b - a).forEach(year => {
-    const divider = document.createElement('div');
-    divider.className = 'section-divider';
+    const divider = document.createElement("div");
+    divider.className = "section-divider";
     divider.textContent = year;
     grid.appendChild(divider);
 
     byYear[year].forEach(p => {
-      const card = document.createElement('a');
-      card.className = 'paper-card';
+      const card = document.createElement("a");
+      card.className = "paper-card";
       card.href = p.url;
-      card.target = '_blank';
-      card.rel = 'noopener noreferrer';
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
 
-      const left = document.createElement('div');
-      left.className = 'paper-left';
+      const left  = document.createElement("div");
+      left.className = "paper-left";
 
-      const title = document.createElement('div');
-      title.className = 'paper-title';
+      const title = document.createElement("div");
+      title.className = "paper-title";
       title.textContent = p.title;
 
-      const meta = document.createElement('div');
-      meta.className = 'paper-meta';
+      const meta  = document.createElement("div");
+      meta.className = "paper-meta";
 
-      const yb = document.createElement('span');
+      const yb = document.createElement("span");
       yb.className = `year-badge ${yearClass(p.year)}`;
       yb.textContent = p.year;
       meta.appendChild(yb);
 
       p.tags.forEach(t => {
-        const tb = document.createElement('span');
-        tb.className = 'paper-tag';
+        const tb = document.createElement("span");
+        tb.className = "paper-tag";
         tb.textContent = t;
         meta.appendChild(tb);
       });
@@ -308,9 +350,9 @@ function filterPapers() {
       left.appendChild(title);
       left.appendChild(meta);
 
-      const arrow = document.createElement('div');
-      arrow.className = 'paper-arrow';
-      arrow.textContent = '↗';
+      const arrow = document.createElement("div");
+      arrow.className = "paper-arrow";
+      arrow.textContent = "↗";
 
       card.appendChild(left);
       card.appendChild(arrow);
@@ -319,7 +361,51 @@ function filterPapers() {
   });
 }
 
-filterPapers();
+function updateStats() {
+  document.getElementById("total-count").textContent = papers.length;
+  if (papers.length > 0) {
+    const years = papers.map(p => p.year);
+    const minY  = Math.min(...years);
+    const maxY  = Math.max(...years);
+    document.getElementById("year-range").textContent =
+      minY === maxY ? String(minY) : `${minY}–${maxY}`;
+  }
+}
+
+// ─── FETCH & INIT ─────────────────────────────────────────────────────────────
+async function init() {
+  const grid = document.getElementById("papers-grid");
+  try {
+    const res = await fetch(README_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const text = await res.text();
+
+    papers = parseReadme(text);
+
+    if (papers.length === 0) {
+      grid.innerHTML = `
+        <div class="error-msg">
+          Parsed 0 papers — the README format may have changed.<br>
+          <a href="https://github.com/liyongqi2002/Awesome-Personalized-Alignment" target="_blank">View on GitHub ↗</a>
+        </div>`;
+      return;
+    }
+
+    buildTagFilters();
+    updateStats();
+    filterPapers();
+
+  } catch (err) {
+    console.error("Failed to fetch README:", err);
+    grid.innerHTML = `
+      <div class="error-msg">
+        Could not load papers from GitHub (${err.message}).<br>
+        <a href="https://github.com/liyongqi2002/Awesome-Personalized-Alignment" target="_blank">View the repository directly ↗</a>
+      </div>`;
+  }
+}
+
+init();
 </script>
 </body>
 </html>
