@@ -1,475 +1,129 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Yongqi Li</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap">
-<style>
-  :root {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f9f8f5;
-    --bg-tertiary: #f1efe8;
-    --text-primary: #1a1a18;
-    --text-secondary: #5f5e5a;
-    --text-tertiary: #888780;
-    --border: rgba(30,28,24,0.12);
-    --border-secondary: rgba(30,28,24,0.2);
-    --accent: #534AB7;
-    --accent-bg: #EEEDFE;
-    --accent-text: #3C3489;
-    --teal: #0F6E56;
-    --teal-bg: #E1F5EE;
-    --teal-text: #085041;
-    --coral-bg: #FAECE7;
-    --coral-text: #712B13;
-    --amber-bg: #FAEEDA;
-    --amber-text: #854F0B;
-    --radius-sm: 6px;
-    --radius-md: 8px;
-    --radius-lg: 12px;
-    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg-primary: #1c1b18;
-      --bg-secondary: #242320;
-      --bg-tertiary: #2c2c2a;
-      --text-primary: #f0eeea;
-      --text-secondary: #b4b2a9;
-      --text-tertiary: #888780;
-      --border: rgba(255,255,255,0.1);
-      --border-secondary: rgba(255,255,255,0.18);
-      --accent: #AFA9EC;
-      --accent-bg: #26215C;
-      --accent-text: #CECBF6;
-      --teal: #5DCAA5;
-      --teal-bg: #04342C;
-      --teal-text: #9FE1CB;
-      --coral-bg: #4A1B0C;
-      --coral-text: #F5C4B3;
-      --amber-bg: #412402;
-      --amber-text: #FAC775;
-    }
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { font-size: 16px; scroll-behavior: smooth; }
-  body {
-    font-family: var(--font);
-    background: var(--bg-secondary);
-    color: var(--text-primary);
-    line-height: 1.7;
-    font-weight: 400;
-    min-height: 100vh;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; text-underline-offset: 3px; }
-  .layout { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 5rem; }
-
-  /* Header */
-  .header {
-    display: flex; align-items: center; gap: 2rem;
-    margin-bottom: 3rem; padding-bottom: 2.5rem;
-    border-bottom: 0.5px solid var(--border);
-  }
-  
-  .avatar {
-    width: 115px; height: 140px;   /* 高 > 宽，竖向椭圆 */
-    border-radius: 50%;            /* 椭圆：对非正方形容器 50% = 椭圆 */
-    background: var(--accent-bg); border: 0.5px solid var(--border);
-    flex-shrink: 0;
-    overflow: hidden;
-    box-shadow: 0 0 0 3px var(--bg-primary), 0 0 0 4px var(--border);
-    margin-top: 4px;
-  }
-  
-  .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;    /* 填满不变形 */
-    object-position: center top;  /* 人脸偏上，可调 */
-    display: block;
-  }
-
-  
-  .header-info { flex: 1; }
-  h1 { font-size: 26px; font-weight: 500; line-height: 1.2; margin-bottom: 4px; }
-  .affiliation { font-size: 14px; color: var(--text-secondary); margin-bottom: 12px; }
-  .email-tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 13px; color: var(--text-secondary);
-    background: var(--bg-tertiary); border: 0.5px solid var(--border);
-    border-radius: 6px; padding: 4px 10px; margin-bottom: 14px;
-  }
-  .social-links { display: flex; flex-wrap: wrap; gap: 6px; }
-  .social-link {
-    font-size: 12px; font-weight: 500; color: var(--accent-text);
-    background: var(--accent-bg); border: 0.5px solid rgba(83,74,183,0.2);
-    border-radius: 6px; padding: 4px 10px; transition: opacity 0.15s; text-decoration: none;
-  }
-  .social-link:hover { opacity: 0.75; text-decoration: none; }
-
-  /* Sections */
-  .section { margin-bottom: 2.5rem; }
-  h2 {
-    font-size: 13px; font-weight: 500; color: var(--text-tertiary);
-    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;
-  }
-
-  /* About */
-  .about-card {
-    background: var(--bg-primary); border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg); padding: 1.25rem 1.5rem;
-    font-size: 15px; line-height: 1.75;
-  }
-  .about-card p + p { margin-top: 0.75rem; }
-
-  /* Awards */
-  .award-list { display: flex; flex-direction: column; gap: 8px; }
-  .award-item {
-    background: var(--bg-primary); border: 0.5px solid var(--border);
-    border-radius: var(--radius-md); padding: 0.75rem 1rem;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 1rem; font-size: 14px;
-  }
-  .award-name { font-weight: 500; }
-  .award-org { color: var(--text-secondary); font-size: 13px; }
-  .award-year {
-    font-size: 12px; font-weight: 500;
-    color: var(--amber-text); background: var(--amber-bg);
-    border-radius: 5px; padding: 2px 8px; white-space: nowrap;
-  }
-
-  /* Experience */
-  .exp-card {
-    background: var(--bg-primary); border: 0.5px solid var(--border);
-    border-radius: var(--radius-md); padding: 0.875rem 1rem;
-    font-size: 14px; display: flex; align-items: center; gap: 1rem;
-  }
-  .exp-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); flex-shrink: 0; }
-  .exp-role { font-weight: 500; }
-  .exp-meta { color: var(--text-secondary); font-size: 13px; }
-  .exp-period { margin-left: auto; font-size: 12px; color: var(--text-tertiary); white-space: nowrap; }
-
-  /* Publications */
-  .pub-section-header {
-    display: flex; align-items: baseline; justify-content: space-between;
-    margin-bottom: 1rem;
-  }
-  .pub-section-header h2 { margin-bottom: 0; }
-  .view-all-link {
-    font-size: 12px; font-weight: 500;
-    color: var(--text-secondary);
-    border: 0.5px solid var(--border);
-    background: var(--bg-primary);
-    border-radius: 6px; padding: 4px 12px;
-    display: inline-flex; align-items: center; gap: 5px;
-    transition: all 0.15s; text-decoration: none;
-  }
-  .view-all-link:hover {
-    color: var(--text-primary);
-    border-color: var(--border-secondary);
-    text-decoration: none;
-  }
-  .view-all-link svg { opacity: 0.5; }
-
-  .pub-list { display: flex; flex-direction: column; gap: 8px; }
-  .pub-card {
-    background: var(--bg-primary); border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg); padding: 1rem 1.25rem;
-    transition: border-color 0.15s;
-  }
-  .pub-card:hover { border-color: var(--border-secondary); }
-  .pub-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; line-height: 1.5; }
-  .pub-authors { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; line-height: 1.5; }
-  .pub-authors strong { color: var(--text-primary); font-weight: 500; }
-  .pub-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
-
-  /* Unified neutral badge */
-  .badge {
-    display: inline-block; font-size: 11px; font-weight: 500;
-    padding: 2px 7px; border-radius: 5px; white-space: nowrap;
-    background: var(--bg-tertiary); color: var(--text-secondary);
-    border: 0.5px solid var(--border);
-  }
-  .badge-oral {
-    background: var(--coral-bg); color: var(--coral-text);
-    border: 0.5px solid rgba(153,60,29,0.15);
-  }
-
-  .pub-links { display: flex; gap: 8px; margin-left: auto; flex-wrap: wrap; }
-  .pub-link {
-    font-size: 12px; color: var(--text-secondary);
-    border: 0.5px solid var(--border); border-radius: 5px;
-    padding: 2px 8px; background: var(--bg-secondary);
-    transition: all 0.15s; text-decoration: none;
-  }
-  .pub-link:hover { color: var(--text-primary); border-color: var(--border-secondary); text-decoration: none; }
-
-  /* Full publications CTA card */
-  .pub-cta {
-    margin-top: 12px;
-    background: var(--bg-primary);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1rem 1.25rem;
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  }
-  .pub-cta-text { font-size: 14px; color: var(--text-secondary); }
-  .pub-cta-text strong { color: var(--text-primary); font-weight: 500; }
-  .pub-cta-btn {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 13px; font-weight: 500;
-    color: var(--accent-text); background: var(--accent-bg);
-    border: 0.5px solid rgba(83,74,183,0.2);
-    border-radius: 7px; padding: 6px 14px;
-    transition: opacity 0.15s; text-decoration: none; white-space: nowrap;
-  }
-  .pub-cta-btn:hover { opacity: 0.78; text-decoration: none; }
-
-  /* Service */
-  .service-card {
-    background: var(--bg-primary); border: 0.5px solid var(--border);
-    border-radius: var(--radius-md); padding: 0.875rem 1rem;
-    font-size: 14px; color: var(--text-secondary); line-height: 1.6;
-  }
-  .service-card strong { color: var(--text-primary); font-weight: 500; }
-
-  footer {
-    text-align: center; padding: 2rem 0 0;
-    border-top: 0.5px solid var(--border);
-    font-size: 13px; color: var(--text-tertiary);
-  }
-
-  @media (max-width: 540px) {
-    /* .header { flex-direction: column; gap: 1.25rem; } */
-    /* .avatar { width: 64px; height: 64px; font-size: 20px; } */
-
-    /* 改成缩小头像 + 保持横排 */
-    .header { gap: 1rem; }
-    .avatar { width: 64px; height: 85px; }  /* 按你的椭圆比例缩小 */
-
-  
-    h1 { font-size: 22px; }
-    .pub-links { margin-left: 0; }
-    .award-item { flex-direction: column; align-items: flex-start; gap: 4px; }
-    .pub-cta { flex-direction: column; align-items: flex-start; }
-  }
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
-<div class="layout">
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&display=swap" />
+  <script src="./image-slot.js"></script>
+  <style>
+    body { margin: 0; font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif; background: #ffffff; }
+    a { color: #1a1a1a; text-decoration: underline; text-decoration-color: rgba(26,26,26,0.35); text-underline-offset: 3px; }
+    a:hover { text-decoration-color: #1a1a1a; }
+  </style>
+</helmet>
 
-  <!-- Header / Bio -->
-  <div class="header">
-    <!-- <div class="avatar">YL</div> -->
-    <div class="avatar">
-       <img src="img/YongqiLi.png" alt="YongqiLi.png">
+<div style="max-width:680px;margin:0 auto;padding:4rem 1.5rem 6rem;color:#1a1a1a;line-height:1.65;font-size:16px" data-screen-label="Homepage">
+
+  <!-- Header -->
+  <div style="display:flex;align-items:flex-start;gap:1.75rem;margin-bottom:2.5rem">
+    <div style="width:104px;height:128px;flex-shrink:0;overflow:hidden">
+      <image-slot id="avatar" shape="rect" placeholder="Drop headshot" style="width:100%;height:100%"></image-slot>
     </div>
-    <div class="header-info">
-      <h1>Yongqi Li</h1>
-      <div class="affiliation">Final-year Master student · <a href="https://nlpgm.github.io/">NLPGM Lab</a>, Wuhan University</div>
-      <div class="email-tag">
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-          <rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.2"/>
-          <path d="M1.5 4l6.5 5 6.5-5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-        </svg>
-        liyongqi[at]whu.edu.cn
-      </div>
-      <div class="social-links">
-        <a class="social-link" href="https://scholar.google.com/citations?user=2R_eMkkAAAAJ">Google Scholar</a>
-        <a class="social-link" href="https://dblp.org/pid/249/4156-2.html">DBLP</a>
-        <a class="social-link" href="https://github.com/liyongqi2002">GitHub</a>
-        <a class="social-link" href="https://www.zhihu.com/people/lyq2002">Zhihu</a>
-        <a class="social-link" href="https://x.com/yqli02">X / Twitter</a>
-      </div>
+    <div style="flex:1;padding-top:4px">
+      <h1 style="font-size:28px;font-weight:600;line-height:1.2;margin:0 0 6px">Yongqi Li</h1>
+      <div style="font-size:16px;color:#333;margin-bottom:10px">Final-year Master student, <a href="https://nlpgm.github.io/">NLPGM Lab</a>, Wuhan University</div>
+      <div style="font-size:14px;color:#555">liyongqi [at] whu.edu.cn</div>
     </div>
+  </div>
+
+  <div style="font-size:14px;color:#333;margin-bottom:2.75rem;padding-bottom:1.75rem;border-bottom:1px solid #ddd">
+    <a href="https://scholar.google.com/citations?user=2R_eMkkAAAAJ">Google Scholar</a> &nbsp;/&nbsp;
+    <a href="https://dblp.org/pid/249/4156-2.html">DBLP</a> &nbsp;/&nbsp;
+    <a href="https://github.com/liyongqi2002">GitHub</a> &nbsp;/&nbsp;
+    <a href="https://www.zhihu.com/people/lyq2002">Zhihu</a> &nbsp;/&nbsp;
+    <a href="https://x.com/yqli02">X / Twitter</a>
   </div>
 
   <!-- About -->
-  <div class="section">
-    <h2>About</h2>
-    <div class="about-card">
-      <p>I am a final-year Master student at <a href="https://nlpgm.github.io/">NLPGM Lab @ Wuhan University</a>, supervised by <a href="http://jszy.whu.edu.cn/qiantieyun/en/index.htm">Prof. Tieyun Qian</a>. I obtained my B.Eng. with honors from Wuhan University in 2023. My research focuses on understanding and improving the generalization of AI models during the post-training/alignment phase. Besides, I believe that exploring representation learning is the inevitable path toward next-era intelligence.</p>
-    </div>
+  <div style="margin-bottom:2.5rem">
+    <h2 style="font-size:15px;font-weight:600;letter-spacing:0.02em;margin:0 0 0.9rem;text-transform:uppercase;color:#1a1a1a">About</h2>
+    <p style="margin:0;font-size:16px;line-height:1.75">I am a final-year Master student at <a href="https://nlpgm.github.io/">NLPGM Lab @ Wuhan University</a>, supervised by <a href="http://jszy.whu.edu.cn/qiantieyun/en/index.htm">Prof. Tieyun Qian</a>. I obtained my B.Eng. with honors from Wuhan University in 2023. My research focuses on understanding and improving the generalization of AI models during the post-training/alignment phase. Besides, I believe that exploring representation learning is the inevitable path toward next-era intelligence.</p>
   </div>
 
   <!-- Experience -->
-  <div class="section">
-    <h2>Experience</h2>
-    <div class="exp-card">
-      <div class="exp-dot"></div>
+  <div style="margin-bottom:2.5rem">
+    <h2 style="font-size:15px;font-weight:600;letter-spacing:0.02em;margin:0 0 0.9rem;text-transform:uppercase;color:#1a1a1a">Experience</h2>
+    <div style="display:flex;justify-content:space-between;gap:1rem;font-size:16px">
+      <div>Research Intern, <a href="https://tongyi.aliyun.com/">Tongyi Lab</a>, Alibaba — Character AI</div>
+      <div style="color:#555;white-space:nowrap;font-size:14px">May 2025 – Jan. 2026</div>
+    </div>
+  </div>
+
+  <!-- Publications -->
+  <div style="margin-bottom:2.5rem">
+    <h2 style="font-size:15px;font-weight:600;letter-spacing:0.02em;margin:0 0 0.9rem;text-transform:uppercase;color:#1a1a1a">Selected Publications</h2>
+    <div style="font-size:13px;color:#666;margin-bottom:1.1rem">* corresponding&nbsp; † equal contribution&nbsp; — <a href="Publications.dc.html">full list</a></div>
+
+    <div style="display:flex;flex-direction:column;gap:1.5rem">
+
       <div>
-        <div class="exp-role">Research Intern · <a href="https://tongyi.aliyun.com/">Tongyi Lab</a>, Alibaba</div>
-        <div class="exp-meta">Character AI</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:3px;line-height:1.5">Controlling Multimodal Conversational Agents with Coverage-Enhanced Latent Actions</div>
+        <div style="font-size:14px;color:#444;margin-bottom:5px;line-height:1.5"><strong>Yongqi Li</strong>†, Hao Lang†, Tieyun Qian*, Yongbin Li*</div>
+        <div style="font-size:13px;color:#555">ACL 2026 &nbsp;·&nbsp; <a href="https://arxiv.org/abs/2601.07516">Paper</a> &nbsp;·&nbsp; <a href="https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/MMLatentAction">Code</a> &nbsp;·&nbsp; <a href="https://mp.weixin.qq.com/s/nXqaWNzvCH9465m54k6lUQ">Blog (中文)</a></div>
       </div>
-      <div class="exp-period">May 2025 – Jan. 2026</div>
+
+      <div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:3px;line-height:1.5">Understanding Generalization in Role-Playing Models via Information Theory</div>
+        <div style="font-size:14px;color:#444;margin-bottom:5px;line-height:1.5"><strong>Yongqi Li</strong>†, Hao Lang†, Fei Huang, Tieyun Qian*, Yongbin Li*</div>
+        <div style="font-size:13px;color:#555">ACL 2026 Findings &nbsp;·&nbsp; <a href="https://arxiv.org/abs/2512.17270">Paper</a> &nbsp;·&nbsp; <a href="https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/RPM-Generalization">Code</a> &nbsp;·&nbsp; <a href="https://huggingface.co/datasets/YongqiLi/RPGBench">Benchmark</a> &nbsp;·&nbsp; <a href="https://mp.weixin.qq.com/s/aLnwchng0RyV0oCwHngzLg">Blog (中文)</a></div>
+      </div>
+
+      <div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:3px;line-height:1.5">Aligning VLM Assistants with Personalized Situated Cognition</div>
+        <div style="font-size:14px;color:#444;margin-bottom:5px;line-height:1.5"><strong>Yongqi Li</strong>, Shen Zhou, Xiaohu Li, Xin Miao, Jintao Wen, Mayi Xu, Jianhao Chen, Birong Pan, Hankun Kang, Yuanyuan Zhu*, Ming Zhong, Tieyun Qian*</div>
+        <div style="font-size:13px;color:#555">ACL 2025 &nbsp;·&nbsp; <a href="https://aclanthology.org/2025.acl-long.484.pdf">Paper</a> &nbsp;·&nbsp; <a href="https://github.com/liyongqi2002/PCogAlign">Code</a> &nbsp;·&nbsp; <a href="https://huggingface.co/datasets/YongqiLi/PCogAlignBench">Benchmark</a> &nbsp;·&nbsp; <a href="https://github.com/liyongqi2002/Awesome-Personalized-Alignment">Collection</a></div>
+      </div>
+
+      <div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:3px;line-height:1.5">Strong Empowered and Aligned Weak Mastered Annotation for Weak-to-Strong Generalization</div>
+        <div style="font-size:14px;color:#444;margin-bottom:5px;line-height:1.5"><strong>Yongqi Li</strong>, Xin Miao, Mayi Xu, Tieyun Qian*</div>
+        <div style="font-size:13px;color:#555">AAAI 2025 &nbsp;·&nbsp; <a href="../resources/arxiv_aaai25_W2SG.pdf">Paper</a> &nbsp;·&nbsp; <a href="https://github.com/liyongqi2002/SEAM">Code</a> &nbsp;·&nbsp; <a href="https://zhuanlan.zhihu.com/p/29518652558">Blog (中文)</a></div>
+      </div>
+
+      <div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:3px;line-height:1.5">Enhancing Relation Extraction via Supervised Rationale Verification and Feedback</div>
+        <div style="font-size:14px;color:#444;margin-bottom:5px;line-height:1.5"><strong>Yongqi Li</strong>, Xin Miao, Shen Zhou, Mayi Xu, Yuyang Ren, Tieyun Qian*</div>
+        <div style="font-size:13px;color:#555">AAAI 2025 (Oral, 4.6%) &nbsp;·&nbsp; <a href="../resources/aaai25_SRVF.pdf">Paper</a> &nbsp;·&nbsp; <a href="https://github.com/liyongqi2002/SRVF">Code</a> &nbsp;·&nbsp; <a href="https://zhuanlan.zhihu.com/p/12000560714">Blog (中文)</a></div>
+      </div>
+
     </div>
   </div>
-
-
-  <!-- Selected Publications -->
-  <div class="section">
-    <div class="pub-section-header">
-      <h2>Selected Publications <span style="font-weight:400;font-size:11px;color:var(--text-tertiary);text-transform:none;letter-spacing:0">· <sup>*</sup> corresponding · <sup>†</sup> equal contribution</span></h2>
-      <a class="view-all-link" href="publications.html">
-        Full list
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </div>
-
-    <div class="pub-list">
-
-      <div class="pub-card">
-        <div class="pub-title">Controlling Multimodal Conversational Agents with Coverage-Enhanced Latent Actions</div>
-        <div class="pub-authors"><strong>Yongqi Li</strong><sup>†</sup>, Hao Lang<sup>†</sup>, Tieyun Qian<sup>*</sup>, Yongbin Li<sup>*</sup></div>
-        <div class="pub-footer">
-          <span class="badge">ACL 2026</span>
-          <div class="pub-links">
-            <a class="pub-link" href="https://arxiv.org/abs/2601.07516">Paper</a>
-            <a class="pub-link" href="https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/MMLatentAction">Code</a>
-            <a class="pub-link" href="https://mp.weixin.qq.com/s/nXqaWNzvCH9465m54k6lUQ">Blog (中文)</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pub-card">
-        <div class="pub-title">Understanding Generalization in Role-Playing Models via Information Theory</div>
-        <div class="pub-authors"><strong>Yongqi Li</strong><sup>†</sup>, Hao Lang<sup>†</sup>, Fei Huang, Tieyun Qian<sup>*</sup>, Yongbin Li<sup>*</sup></div>
-        <div class="pub-footer">
-          <span class="badge">ACL 2026 Findings</span>
-          <div class="pub-links">
-            <a class="pub-link" href="https://arxiv.org/abs/2512.17270">Paper</a>
-            <a class="pub-link" href="https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/RPM-Generalization">Code</a>
-            <a class="pub-link" href="https://huggingface.co/datasets/YongqiLi/RPGBench">Benchmark</a>
-            <a class="pub-link" href="https://mp.weixin.qq.com/s/aLnwchng0RyV0oCwHngzLg">Blog (中文)</a>
-          </div>
-        </div>
-      </div>
-      
-      <div class="pub-card">
-        <div class="pub-title">Aligning VLM Assistants with Personalized Situated Cognition</div>
-        <div class="pub-authors"><strong>Yongqi Li</strong>, Shen Zhou, Xiaohu Li, Xin Miao, Jintao Wen, Mayi Xu, Jianhao Chen, Birong Pan, Hankun Kang, Yuanyuan Zhu<sup>*</sup>, Ming Zhong, Tieyun Qian<sup>*</sup></div>
-        <div class="pub-footer">
-          <span class="badge">ACL 2025</span>
-          <div class="pub-links">
-            <a class="pub-link" href="https://aclanthology.org/2025.acl-long.484.pdf">Paper</a>
-            <a class="pub-link" href="https://github.com/liyongqi2002/PCogAlign">Code</a>
-            <a class="pub-link" href="https://huggingface.co/datasets/YongqiLi/PCogAlignBench">Benchmark</a>
-            <a class="pub-link" href="https://github.com/liyongqi2002/Awesome-Personalized-Alignment">Collection</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pub-card">
-        <div class="pub-title">Strong Empowered and Aligned Weak Mastered Annotation for Weak-to-Strong Generalization</div>
-        <div class="pub-authors"><strong>Yongqi Li</strong>, Xin Miao, Mayi Xu, Tieyun Qian<sup>*</sup></div>
-        <div class="pub-footer">
-          <span class="badge">AAAI 2025</span>
-          <div class="pub-links">
-            <a class="pub-link" href="../resources/arxiv_aaai25_W2SG.pdf">Paper</a>
-            <a class="pub-link" href="https://github.com/liyongqi2002/SEAM">Code</a>
-            <a class="pub-link" href="https://zhuanlan.zhihu.com/p/29518652558">Blog (中文)</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="pub-card">
-        <div class="pub-title">Enhancing Relation Extraction via Supervised Rationale Verification and Feedback</div>
-        <div class="pub-authors"><strong>Yongqi Li</strong>, Xin Miao, Shen Zhou, Mayi Xu, Yuyang Ren, Tieyun Qian<sup>*</sup></div>
-        <div class="pub-footer">
-          <span class="badge">AAAI 2025</span>
-          <span class="badge badge-oral">Oral · 4.6%</span>
-          <div class="pub-links">
-            <a class="pub-link" href="../resources/aaai25_SRVF.pdf">Paper</a>
-            <a class="pub-link" href="https://github.com/liyongqi2002/SRVF">Code</a>
-            <a class="pub-link" href="https://zhuanlan.zhihu.com/p/12000560714">Blog (中文)</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- <div class="pub-card">
-        <div class="pub-title">Prompting Large Language Models for Counterfactual Generation: An Empirical Study</div>
-        <div class="pub-authors"><strong>Yongqi Li</strong><sup>†</sup>, Mayi Xu<sup>†</sup>, Xin Miao<sup>†</sup>, Shen Zhou<sup>†</sup>, Tieyun Qian<sup>*</sup></div>
-        <div class="pub-footer">
-          <span class="badge">LREC-COLING 2024</span>
-          <div class="pub-links">
-            <a class="pub-link" href="../resources/coling24_llmcf.pdf">Paper</a>
-          </div>
-        </div>
-      </div>
-      
-      <div class="pub-card">
-        <div class="pub-title">Type-Aware Decomposed Framework for Few-Shot Named Entity Recognition</div>
-        <div class="pub-authors"><strong>Yongqi Li</strong>, Yu Yu, Tieyun Qian<sup>*</sup></div>
-        <div class="pub-footer">
-          <span class="badge">EMNLP 2023 Findings</span>
-          <div class="pub-links">
-            <a class="pub-link" href="../resources/emnlp23_fsNER.pdf">Paper</a>
-            <a class="pub-link" href="https://github.com/liyongqi2002/TadNER">Code</a>
-            <a class="pub-link" href="https://zhuanlan.zhihu.com/p/672183269">Blog (中文)</a>
-          </div>
-        </div>
-      </div> -->
-
-      
-      
-    </div>
-
-    
-    <!-- CTA to full list -->
-    <!-- <div class="pub-cta">
-      <div class="pub-cta-text"><strong>13 publications</strong> across ACL, EMNLP, AAAI, SIGIR and more</div>
-      <a class="pub-cta-btn" href="publications.html">
-        View all publications
-        <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
-          <path d="M2.5 6h7M6.5 3l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </div> -->
-  </div>
-
 
   <!-- Awards -->
-  <div class="section">
-    <h2>Awards &amp; Honors</h2>
-    <div class="award-list">
-      <div class="award-item">
-        <div>
-          <div class="award-name">National Scholarship</div>
-          <div class="award-org">Ministry of Education</div>
-        </div>
-        <div class="award-year">2025</div>
+  <div style="margin-bottom:2.5rem">
+    <h2 style="font-size:15px;font-weight:600;letter-spacing:0.02em;margin:0 0 0.9rem;text-transform:uppercase;color:#1a1a1a">Awards &amp; Honors</h2>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:16px">
+      <div style="display:flex;justify-content:space-between;gap:1rem">
+        <div>National Scholarship — Ministry of Education</div>
+        <div style="color:#555;white-space:nowrap;font-size:14px">2025</div>
       </div>
-      <div class="award-item">
-        <div>
-          <div class="award-name">Outstanding Undergraduate Thesis <span style="font-weight:400;color:var(--text-secondary)">(top 5%)</span></div>
-          <div class="award-org">Wuhan University</div>
-        </div>
-        <div class="award-year">2023</div>
+      <div style="display:flex;justify-content:space-between;gap:1rem">
+        <div>Outstanding Undergraduate Thesis (top 5%) — Wuhan University</div>
+        <div style="color:#555;white-space:nowrap;font-size:14px">2023</div>
       </div>
-      <div class="award-item">
-        <div>
-          <div class="award-name">Honor Graduate Award · 弘毅学堂荣誉毕业生</div>
-          <div class="award-org">Undergraduate College, Wuhan University</div>
-        </div>
-        <div class="award-year">2023</div>
+      <div style="display:flex;justify-content:space-between;gap:1rem">
+        <div>Honor Graduate Award · 弘毅学堂荣誉毕业生 — Undergraduate College, Wuhan University</div>
+        <div style="color:#555;white-space:nowrap;font-size:14px">2023</div>
       </div>
-    </div>
-  </div>
-  
-  <!-- Service -->
-  <div class="section">
-    <h2>Service</h2>
-    <div class="service-card">
-      <strong>Conference Reviewer</strong> · ACL 2024–2026 · EMNLP 2024–2025 · NAACL 2024–2025 · EACL 2024–2026 · AAAI 2025–2026
     </div>
   </div>
 
-  <footer>&copy; 2026 Yongqi Li</footer>
+  <!-- Service -->
+  <div style="margin-bottom:2.5rem">
+    <h2 style="font-size:15px;font-weight:600;letter-spacing:0.02em;margin:0 0 0.9rem;text-transform:uppercase;color:#1a1a1a">Service</h2>
+    <div style="font-size:16px;color:#333;line-height:1.6"><strong>Conference Reviewer</strong> — ACL 2024–2026, EMNLP 2024–2025, NAACL 2024–2025, EACL 2024–2026, AAAI 2025–2026</div>
+  </div>
+
+  <div style="text-align:left;padding-top:1.75rem;border-top:1px solid #ddd;font-size:13px;color:#777">© 2026 Yongqi Li</div>
+
 </div>
+
+</x-dc>
 </body>
 </html>
