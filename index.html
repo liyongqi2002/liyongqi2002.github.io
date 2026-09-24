@@ -15,6 +15,10 @@
     body { margin: 0; font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif; background: #ffffff; }
     a { color: #1a1a1a; text-decoration: underline; text-decoration-color: rgba(26,26,26,0.35); text-underline-offset: 3px; }
     a:hover { text-decoration-color: #1a1a1a; }
+    @media (max-width: 560px) {
+      .dated-row { flex-direction: column; gap: 0.2rem !important; }
+      .dated-row .date { white-space: normal !important; }
+    }
   </style>
 </helmet>
 
@@ -47,19 +51,8 @@
   <div style="margin-bottom:2.5rem">
     <h2 style="font-size:15px;font-weight:600;letter-spacing:0.02em;margin:0 0 0.9rem;text-transform:uppercase;color:#1a1a1a">About</h2>
     <p style="margin:0;font-size:16px;line-height:1.75">
-      I am a Ph.D. student in the Department of Computer Science and Engineering at the Hong Kong University of Science and Technology (HKUST), supervised by Prof. Xiaofang Zhou, starting from Fall 2026. 
-      Prior to this, I obtained my M.Eng. (supervised by Prof. Tieyun Qian) and B.Eng. (with honors) from Wuhan University in 2026 and 2023, respectively. 
-      My current research aims to enable AI agents to learn from lifelong experience, focusing on efficient experience data infrastructure and learning methods.
+      I am a Ph.D. student in Computer Science and Engineering at HKUST. My research focuses on enabling AI agents to learn from lifelong experience, particularly through efficient experience data infrastructure and learning methods.
     </p>
-  </div>
-
-  <!-- Experience -->
-  <div style="margin-bottom:2.5rem">
-    <h2 style="font-size:15px;font-weight:600;letter-spacing:0.02em;margin:0 0 0.9rem;text-transform:uppercase;color:#1a1a1a">Experience</h2>
-    <div style="display:flex;justify-content:space-between;gap:1rem;font-size:16px">
-      <div>Research Intern, <a href="https://tongyi.aliyun.com/">Tongyi Lab</a>, Alibaba — Character AI</div>
-      <div style="color:#555;white-space:nowrap;font-size:14px">May 2025 – Jan. 2026</div>
-    </div>
   </div>
 
   <!-- Publications -->
@@ -90,25 +83,65 @@
     </div>
   </div>
 
+  <!-- Education -->
+  <div style="margin-bottom:2.5rem">
+    <h2 style="font-size:15px;font-weight:600;letter-spacing:0.02em;margin:0 0 0.9rem;text-transform:uppercase;color:#1a1a1a">Education</h2>
+    <div style="display:flex;flex-direction:column;gap:1rem;font-size:16px">
+      <div class="dated-row" style="display:flex;justify-content:space-between;gap:1rem">
+        <div>
+          <div><strong>Ph.D. in Computer Science and Engineering</strong></div>
+          <div style="color:#444;font-size:14px">Hong Kong University of Science and Technology · Supervisor: <a href="https://sites.google.com/view/xiaofang-zhou/home">Prof. Xiaofang Zhou</a></div>
+        </div>
+        <div class="date" style="color:#555;white-space:nowrap;font-size:14px">2026 – Present</div>
+      </div>
+      <div class="dated-row" style="display:flex;justify-content:space-between;gap:1rem">
+        <div>
+          <div><strong>M.Eng. in Computer Science and Technology</strong></div>
+          <div style="color:#444;font-size:14px">Wuhan University · Supervisor: <a href="https://jszy.whu.edu.cn/qiantieyun/zh_CN/more/236169/jsjjgd/index.htm">Prof. Tieyun Qian</a></div>
+        </div>
+        <div class="date" style="color:#555;white-space:nowrap;font-size:14px">2023 – 2026</div>
+      </div>
+      <div class="dated-row" style="display:flex;justify-content:space-between;gap:1rem">
+        <div>
+          <div><strong>B.Eng. in Computer Science and Technology</strong></div>
+          <div style="color:#444;font-size:14px">Wuhan University · Hongyi Honor Class</div>
+        </div>
+        <div class="date" style="color:#555;white-space:nowrap;font-size:14px">2019 – 2023</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience -->
+  <div style="margin-bottom:2.5rem">
+    <h2 style="font-size:15px;font-weight:600;letter-spacing:0.02em;margin:0 0 0.9rem;text-transform:uppercase;color:#1a1a1a">Experience</h2>
+    <div class="dated-row" style="display:flex;justify-content:space-between;gap:1rem;font-size:16px">
+      <div>
+        <div>Research Intern, <a href="https://tongyi.aliyun.com/">Tongyi Lab</a>, Alibaba — Character AI</div>
+        <div style="color:#444;font-size:14px">Mentored by <a href="https://scholar.google.com/citations?hl=zh-CN&amp;user=0UGQL9QAAAAJ&amp;view_op=list_works&amp;sortby=pubdate">Hao Lang</a> and <a href="https://scholar.google.com/citations?user=xF5VrokAAAAJ&amp;hl=zh-CN">Yongbin Li</a></div>
+      </div>
+      <div class="date" style="color:#555;white-space:nowrap;font-size:14px">May 2025 – Jan. 2026</div>
+    </div>
+  </div>
+
   <!-- Awards -->
   <div style="margin-bottom:2.5rem">
     <h2 style="font-size:15px;font-weight:600;letter-spacing:0.02em;margin:0 0 0.9rem;text-transform:uppercase;color:#1a1a1a">Awards &amp; Honors</h2>
     <div style="display:flex;flex-direction:column;gap:6px;font-size:16px">
-      <div style="display:flex;justify-content:space-between;gap:1rem">
+      <div class="dated-row" style="display:flex;justify-content:space-between;gap:1rem">
         <div>Outstanding Graduate Student — Wuhan University</div>
-        <div style="color:#555;white-space:nowrap;font-size:14px">2026</div>
+        <div class="date" style="color:#555;white-space:nowrap;font-size:14px">2026</div>
       </div>
-      <div style="display:flex;justify-content:space-between;gap:1rem">
-        <div><strong>National Scholarship</strong> — Ministry of Education</div>
-        <div style="color:#555;white-space:nowrap;font-size:14px">2025</div>
+      <div class="dated-row" style="display:flex;justify-content:space-between;gap:1rem">
+        <div>National Scholarship — Ministry of Education</div>
+        <div class="date" style="color:#555;white-space:nowrap;font-size:14px">2025</div>
       </div>
-      <div style="display:flex;justify-content:space-between;gap:1rem">
+      <div class="dated-row" style="display:flex;justify-content:space-between;gap:1rem">
         <div>Outstanding Undergraduate Thesis — Wuhan University</div>
-        <div style="color:#555;white-space:nowrap;font-size:14px">2023</div>
+        <div class="date" style="color:#555;white-space:nowrap;font-size:14px">2023</div>
       </div>
-      <div style="display:flex;justify-content:space-between;gap:1rem">
+      <div class="dated-row" style="display:flex;justify-content:space-between;gap:1rem">
         <div>Hongyi Honor Graduate Award — Undergraduate College, Wuhan University</div>
-        <div style="color:#555;white-space:nowrap;font-size:14px">2023</div>
+        <div class="date" style="color:#555;white-space:nowrap;font-size:14px">2023</div>
       </div>
     </div>
   </div>
